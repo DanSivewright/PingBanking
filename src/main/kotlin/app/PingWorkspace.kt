@@ -1,5 +1,6 @@
 package app
 
+import controllers.ItemController
 import javafx.scene.control.TabPane
 import models.TransactionsEntryTbl
 import org.jetbrains.exposed.sql.Database
@@ -22,6 +23,8 @@ class PingWorkspace : Workspace("Ping Banking Workspace", NavigationMode.Tabs) {
         createTables()
 
         // Controllers
+        ItemController()
+
         // Doc views
 
         tabContainer.tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
