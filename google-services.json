@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "643408512577",
+    "firebase_url": "https://pingbanking-c3054.firebaseio.com",
+    "project_id": "pingbanking-c3054",
+    "storage_bucket": "pingbanking-c3054.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643408512577:android:623373715ae6fe7ffea8c0",
+        "android_client_info": {
+          "package_name": "com.pingBanking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643408512577-g7rbq9q1k5qedr2j91vec07c3vs67ccl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVfr9613iy-dj0U-SwGWZ9wQXogo-oJTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643408512577-g7rbq9q1k5qedr2j91vec07c3vs67ccl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
