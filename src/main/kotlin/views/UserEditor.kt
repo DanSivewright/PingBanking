@@ -77,7 +77,7 @@ class UserEditor: View("Users") {
                         mTableView = editModel
                         column("Full Name", UserEntryModel::name).makeEditable()
                         column("Id Number", UserEntryModel::id).makeEditable()
-                        column("Balance", UserEntryModel::balance)
+                        column("Balance", UserEntryModel::balance).makeEditable()
 
                         onEditCommit {
                             controller.update(it)
@@ -135,10 +135,10 @@ class UserEditor: View("Users") {
     }
 
     private fun handleDeposit() {
-//        println(mTableView.tableView.selectedItem?.balance?.value?.toDouble())
+        // This functionality is handled in the table... Double the Balance column to deposit and withdraw fundsc
     }
     private fun handleWithdraw() {
-//        println(mTableView.tableView.selectedItem?.balance?.value?.toDouble())
+        // This functionality is handled in the table... Double the Balance column to deposit and withdraw fundsc
     }
 
     private fun addUser() {
