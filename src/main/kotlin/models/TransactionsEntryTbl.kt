@@ -1,13 +1,13 @@
 package models
 
+import javafx.beans.binding.Bindings
+import javafx.beans.binding.NumberBinding
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
-import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
-import org.joda.time.DateTime
 import tornadofx.*
 import util.toJavaLocalDate
 import java.time.LocalDate
@@ -39,6 +39,8 @@ class TransactionEntry(id: Int, transDate: LocalDate, transName: String, transAm
     val transAmountProperty = SimpleDoubleProperty(transAmount)
     var transAmount by transAmountProperty
 
+    var totalExpenses: NumberBinding = Bindings.add(transAmountProperty, 0)
+
     override fun toString(): String {
         return "TransactionEntry(id=$id, transDate=$transDate, transName=$transName, transAmount=$transAmount"
     }
@@ -49,4 +51,5 @@ class TransactionsEntryModel: ItemViewModel<TransactionEntry>() {
     val transDate = bind { item?.transDateProperty }
     val transName = bind { item?.transNameProperty }
     val transAmount = bind { item?.transAmountProperty }
+    var totalExpenses = itemProperty.select(TransactionEntry::totalExpenses)
 }

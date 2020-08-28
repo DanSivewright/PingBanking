@@ -1,6 +1,7 @@
 package util
 
 import models.TransactionsEntryTbl
+import models.UserTbl
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.Transaction
@@ -21,6 +22,7 @@ fun enableConsoleLogger() {
 fun createTables() {
     with(newTransaction()) {
         SchemaUtils.create(TransactionsEntryTbl)
+        SchemaUtils.create(UserTbl)
     }
 }
 

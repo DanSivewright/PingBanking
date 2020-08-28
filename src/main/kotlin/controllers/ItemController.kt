@@ -1,6 +1,8 @@
 package controllers
 
+import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import javafx.scene.chart.PieChart
 import models.TransactionEntry
 import models.TransactionsEntryModel
 import models.TransactionsEntryTbl
@@ -10,8 +12,7 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
-import tornadofx.Controller
-import tornadofx.observable
+import tornadofx.*
 import util.execute
 import util.toDate
 import java.math.BigDecimal
@@ -27,11 +28,13 @@ class ItemController : Controller() {
         }.observable()
     }
 
-    var transactionModel = TransactionsEntryModel()
+    var items: ObservableList<TransactionsEntryModel> by singleAssign()
+    var pieItemsData: ObservableList<PieChart.Data> = FXCollections.observableArrayList<PieChart.Data>()
 
     init {
-        listOfItems.forEach {
-            println("Item::: ${it.transName.value}")
+        items = listOfItems
+        items.forEach {
+            pieItemsData.add(PieChart.Data(it.transName.value, it.transAmount.value.toDouble()))
         }
     }
 
@@ -43,6 +46,14 @@ class ItemController : Controller() {
                 it[transAmount] = BigDecimal.valueOf(newTransAmount)
             }
         }
+
+        listOfItems.add(
+                TransactionsEntryModel().apply {
+                    item = TransactionEntry(newEntry[TransactionsEntryTbl.id], newTransDate, newTransName, newTransAmount)
+                }
+        )
+        pieItemsData.add(PieChart.Data(newTransName, newTransAmount))
+
         return TransactionEntry(newEntry[TransactionsEntryTbl.id], newTransDate, newTransName, newTransAmount)
     }
 
@@ -62,5 +73,31 @@ class ItemController : Controller() {
                 TransactionsEntryTbl.id eq(model.id.value.toInt())
             }
         }
+        listOfItems.remove(model)
+        removeModelFromPie(model)
+    }
+
+    fun updatePie(model: TransactionsEntryModel)  {
+        val modelId = model.id
+        var currentIndex: Int
+        items.forEachIndexed{ index, data ->
+            if (modelId == data.id) {
+                currentIndex = index
+                pieItemsData[currentIndex].name = data.transName.value
+                pieItemsData[currentIndex].pieValue = data.transAmount.value.toDouble()
+            } else {
+
+            }
+        }
+    }
+
+    private fun removeModelFromPie(model: TransactionsEntryModel) {
+        var currentIndex = 0
+        pieItemsData.forEachIndexed{ index, data ->
+            if (data.name ==  model.transName.value && index != -1) {
+                currentIndex = index
+            }
+        }
+        pieItemsData.removeAt(currentIndex)
     }
 }
